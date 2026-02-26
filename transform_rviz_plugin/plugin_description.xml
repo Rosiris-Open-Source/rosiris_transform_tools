@@ -1,0 +1,9 @@
+<library path="transform_rviz_plugin">
+  <class name="transform_rviz_plugin/TFManagerPanel"
+         type="transform_rviz_plugin::TFManagerPanel"
+         base_class_type="rviz_common::Panel">
+    <description>
+      A simple panel that displays Hello World in the 3D scene.
+    </description>
+  </class>
+</library>
