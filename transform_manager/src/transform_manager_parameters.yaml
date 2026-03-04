@@ -1,0 +1,16 @@
+transform_manager:
+  dynamic_frames_publish_frequency: {
+    type: double,
+    description: "Specifies the update rate for publishing of the dynamic frames in Hz.",
+    default_value: 10.0,
+    validation: {
+      gt_eq<>: [0],
+    },
+    read_only: true
+  }
+  enable_services: {
+    type: bool,
+    description: "Enable services for the transform_manger.",
+    default_value: true,
+    read_only: true
+  }

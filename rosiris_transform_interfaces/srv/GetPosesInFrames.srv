@@ -1,0 +1,4 @@
+PoseStampedWithTarget[] poses_to_transform
+---
+ServiceResult result
+geometry_msgs/PoseStamped[] transformed_poses

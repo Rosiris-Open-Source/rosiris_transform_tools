@@ -1,0 +1,4 @@
+string[] frame_names
+---
+ServiceResult result
+string[] not_removed_frames
