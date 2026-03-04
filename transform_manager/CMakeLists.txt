@@ -31,11 +31,9 @@ add_library(transform_manager SHARED
   src/transform_manager.cpp
 )
 target_include_directories(transform_manager
-  PUBLIC
-  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
-  PRIVATE
-  ${PROJECT_SOURCE_DIR}/include
+  PUBLIC # when building package and anything that links against this
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> # building inside this package
+  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>  # define where consumers should include from 
 )
 target_link_libraries(transform_manager 
   rclcpp::rclcpp
@@ -45,12 +43,23 @@ target_link_libraries(transform_manager
   ${tf2_geometry_msgs_TARGETS}
   transform_manager_parameters
 )
-install(TARGETS 
-  transform_manager
+install(
+  TARGETS 
+    transform_manager
+    transform_manager_parameters # include parameters in export
+  EXPORT export_transform_manager # create export group for transform manager
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
+install(
+  DIRECTORY include/
+  DESTINATION include/
+)
+# export lib so other packages can link against
+ament_export_targets(export_transform_manager HAS_LIBRARY_TARGET)
+# propagate dependencies so downstream do not need to include deps
+ament_export_dependencies(${PACKAGE_INCLUDE_DEPS})
 
 # transform manager node
 add_executable(transform_manager_node
@@ -64,6 +73,7 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# example launch
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
